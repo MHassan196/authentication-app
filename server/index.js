@@ -11,7 +11,8 @@ const __dirname = path.resolve();
 app.use(express.json())
 app.use(cors());
 const corsOptions = {
-    origin: 'https://authentication-app-yjhi.vercel.app'
+    origin: 'https://authentication-app-yjhi.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
 };
 
 app.use(cors(corsOptions));
