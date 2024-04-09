@@ -1,13 +1,15 @@
 import nodeMailer from 'nodemailer';
 import Mailgen from 'mailgen';
 
-import ENV from '../config.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 let nodeConfig = {
     service: 'gmail',
     auth : {
-        user : ENV.EMAIL,
-        pass : ENV.PASSWORD
+        user : process.env.EMAIL,
+        pass : process.env.PASSWORD
     },
     tls: {
         // do not fail on invalid certs
@@ -48,7 +50,7 @@ export const registerMail = async (req, res) => {
     var emailBody = MailGenerator.generate(email);
 
     let message = {
-        from : ENV.EMAIL,
+        from : process.env.EMAIL,
         to : userEmail,
         subject : subject || "Registration Successfull",
         html : emailBody
