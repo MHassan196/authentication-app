@@ -3,8 +3,12 @@ import cors from 'cors';
 import morgan from 'morgan';
 import connect from './database/conn.js';
 import router from './router/route.js';
+import path from 'path';
+
+
 
 const app = express();
+const __dirname = path.resolve();
 
 app.use(express.json())
 app.use(cors())
@@ -18,6 +22,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', router)
+
+app.use('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+})
 
 
 connect().then(() => {
