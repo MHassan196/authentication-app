@@ -9,15 +9,16 @@ const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json())
-app.use(cors({
-    origin: ["https://authentication-app-yjhi.vercel.app/"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true
-}))
+app.use(cors());
+const corsOptions = {
+    origin: 'https://authentication-app-yjhi.vercel.app'
+};
+
+app.use(cors(corsOptions));
 app.use(morgan('tiny'))
 app.disable("x-powered-by");
 
-const port = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
     res.status(201).json("GET Request")
@@ -37,9 +38,9 @@ mongoose.connect(process.env.ATLAS_URI)
     });
 
 
-app.listen(8080, () => {
-    console.log(`Server is running on port 8080`);
-})
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 // connect().then(() => {
 //     try {
