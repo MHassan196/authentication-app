@@ -9,7 +9,11 @@ const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: ["https://authentication-app-yjhi.vercel.app/"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true
+}))
 app.use(morgan('tiny'))
 app.disable("x-powered-by");
 
