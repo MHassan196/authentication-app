@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import connect from './database/conn.js';
+import mongoose from 'mongoose';
 import router from './router/route.js';
 import path from 'path';
 
@@ -24,16 +24,27 @@ app.use('/api', router)
 app.use('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 })
+mongoose.connect(process.env.ATLAS_URI)
+    .then(() => {
+        console.log('Database Connected');
+    })
+    .catch((err) => {
+        console.log(err)
+    });
 
 
-connect().then(() => {
-    try {
-        app.listen(port, () => {
-            console.log(`Connected to http://localhost:${port}`)
-        })
-    } catch (error) {
-        console.log('Cannot connect to server')
-    }
-}).catch(error => {
-    console.log("Invalid Database Connection")
+app.listen(8080, () => {
+    console.log(`Server is running on port 8080`);
 })
+
+// connect().then(() => {
+//     try {
+//         app.listen(port, () => {
+//             console.log(`Connected to http://localhost:${port}`)
+//         })
+//     } catch (error) {
+//         console.log('Cannot connect to server')
+//     }
+// }).catch(error => {
+//     console.log("Invalid Database Connection")
+// })
